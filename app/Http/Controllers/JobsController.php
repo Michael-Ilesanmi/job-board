@@ -11,9 +11,17 @@ use Illuminate\Http\Request;
 class JobsController extends Controller
 {
     function index() {
-        $jobs = Job::paginate(10);
-
+        $jobs = Job::latest()->take(10)->get();
         return view('jobs.index', ['jobs'=>$jobs]);
+    }
+    function all(Request $request) {
+        $query = $request->search;
+        if ($query) {
+            $jobs = Job::where('company', 'LIKE', '%'.$query.'%')->orWhere('location', 'LIKE', '%'.$query.'%')->orWhere('title','LIKE', '%'.$query.'%')->paginate(10);
+            return view('jobs.all', ['jobs'=>$jobs]);
+        }
+        $jobs = Job::paginate(10);
+        return view('jobs.all', ['jobs'=>$jobs]);
     }
 
     function job($slug) : View {

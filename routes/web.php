@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,16 +15,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'auth'])->name('login');
+Route::post('/register', [AuthController::class, 'store'])->name('register');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [JobsController::class, 'index'])->name('jobs.index');
+Route::get('/jobs', [JobsController::class, 'all'])->name('jobs.all');
+Route::get('/{slug}', [JobsController::class, 'job'])->name('jobs.show');
 
-Route::get('/jobs', [JobsController::class, 'index'])->name('jobs.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,4 +33,3 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';

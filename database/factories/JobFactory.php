@@ -17,10 +17,12 @@ class JobFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->sentence();
+        $title = fake()->jobTitle();
         return [
             'title' => $title,
             'content' => fake()->paragraph(),
+            'company' => fake()->company(),
+            'location' => fake()->city(),
             'slug' => Str::slug($title)
         ];
     }

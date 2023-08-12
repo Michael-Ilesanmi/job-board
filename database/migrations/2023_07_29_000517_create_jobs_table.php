@@ -16,6 +16,10 @@ return new class extends Migration
             $table->text('slug')->index();
             $table->text('title');
             $table->longText('content');
+            $table->text('company')->nullable();
+            $table->text('location')->nullable();
+            $table->json('tags')->nullable();
+            $table->text('image')->nullable();
             $table->foreignId('posted_by')->nullable()->constrained('users')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
