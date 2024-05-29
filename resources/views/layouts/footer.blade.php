@@ -54,7 +54,8 @@
                     <li><a href="/faq">FAQs</a></li>
                 </ul>
             </nav>
-            <p>© 2023. Michael Ilesanmi</p>
+            
+            <p>&copy; <?php echo date('Y'); ?> by Michael Ilesanmi</p>
         </div>
     </div>
 </footer>
